@@ -1,4 +1,4 @@
-#Interview Homework
+#Fun Node Homework
 
 The purpose of this homework assignment is to evaluate the approach, code, communication and ability of candidates for the Jr Developer position. This is far from anything useful, though hopefully is fun! 
 
@@ -32,12 +32,12 @@ Build this app as a web page front-end talking to a NodeJS server.
 
 #### Web
 
-The web page will be a single page, with two inputs:
+The web page will be a single page, with two *centered* inputs:
 
 * A text box to input potential sequences
 * A button to submit the text to the server
 
-Responses from the server should be indicated to the user (i.e. icon for success or fail, a toast, message alert, whatever). Clear the text box after a successful response to enter another one.
+Responses from the server should be indicated to the user (i.e. icon for success or fail, a toast, message alert, whatever). Clear the text box after a successful response to enter another one. Other page flair is fine, but this is not a design assignment.
 
 **Choose a modern framework!** This single page must be in a modern framework. Examples of these would be ReactJS, AngularJS (1 or 2), VueJS, Ember, Polymer etc. *Do not use jQuery.*
 
