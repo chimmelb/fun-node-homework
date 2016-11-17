@@ -56,7 +56,7 @@ You do **not** need to use NodeJS templating engines (Jade, EJS, Handlebars, etc
 
 Remember this is a *simple* web server. 
 
-**Included Files**
+#### Included Files
 
 Along with this `readme.md`, use the included `db.js` as your data access layer. No need to connect to a real database, but do note a successful store will take 1000ms (time to upgrade the DB service!). Make sure your "success path" utilizes this file.
 
