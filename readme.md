@@ -63,6 +63,17 @@ Along with this `readme.md`, use the included `db.js` as your data access layer.
 Use this file un-edited. Something like `var dao = require('./db.js');` This will simulate calling into 3rd party library for a data storage function.
 
 
+#### Use Case
+
+A successful use case of this system will work like this:
+
+1. User inputs a string on the web page and clicks Submit/Enter
+2. Message is sent to server, which processes (and stores to database if valid sequence)
+3. Response is sent to client after the DB stores the message, or defines it as invalid.
+4. Response is handled by the web page, indicating success or failure.
+
+Note that the user will not know if their string was a success or failure until the server responds. An invalid sequence will return quickly, but a valid sequence will only respond *after 1000ms* because of the `db.js` delay. 
+
 #### Unit Test
 
 Write a unit test. Either on the server side or the client side. 
