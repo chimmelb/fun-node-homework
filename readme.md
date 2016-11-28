@@ -60,6 +60,8 @@ Remember this is a *simple* web server.
 
 Along with this `readme.md`, use the included `db.js` as your data access layer. No need to connect to a real database, but do note a successful store will take 1000ms (time to upgrade the DB service!). Make sure your "success path" utilizes this file.
 
+Use this file un-edited. Something like `var dao = require('./db.js');` This will simulate calling into 3rd party library for a data storage function.
+
 
 #### Unit Test
 
