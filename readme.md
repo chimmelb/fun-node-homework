@@ -41,7 +41,7 @@ Responses from the server should be indicated to the user (i.e. icon for success
 
 Other page flair is fine (CSS styles, etc), show your artistic skills if you want to, but this is not a design assignment.
 
-I would prefer a single index.html file for the Web portion, rather than a fully buildable/deployable boilerplate project.
+Use whatever library and tools you prefer (the less complex the better).
 
 **Choose a modern framework!** This single page must be in a modern framework. Examples of these would be ReactJS, AngularJS, *VueJS*, Ember, Polymer etc. *Do not use jQuery.*
 
