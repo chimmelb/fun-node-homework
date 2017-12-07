@@ -5,7 +5,7 @@ var dao = {
      * This function will take 1000ms to complete, and will call the given callback
      * with an integer ID number on success.
      * @param {string} code The DNA string to store, assumed to already be checked and valid.
-     * @param {function} cb   The node-style callback in the form function(error, result)
+     * @param {function} cb   The node-style callback in the form function(error, resultId)
      */
     store(code, cb) {
         console.log(`Storing code ${code} to db...`); //an ES6 template literal
