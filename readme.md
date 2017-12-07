@@ -1,16 +1,16 @@
-#Fun Node Homework
+# Fun Node Homework
 
-The purpose of this homework assignment is to evaluate the approach, code, communication and ability of candidates for the Jr Developer position. This is far from anything useful, though hopefully is fun! 
+The purpose of this homework assignment is to evaluate the approach, code, communication, _following requirements_ and ability of candidates for the Developer position. This is far from anything useful, though hopefully is fun!
 
 > Read this entire doc before starting.
 
 Depending on previous knowledge, this assignment should take around 2-6 hours. Email me with any questions you have.
 
 
-##Assignment
+## Assignment
 Researchers of a DNA-sequencing group need to store newly found sequences. Design a system that will accept a string, evaluate its validity and store valid results using these following requirements:
 
-###Sequences
+### Sequences
 Valid pairs of DNA are represented by `PA`, `NY`,`OH`,`WV` and encapsulate other valid pairs. A sequence can be any number of pairs.
 
 **Example valid pairs:**
@@ -28,7 +28,7 @@ Valid pairs of DNA are represented by `PA`, `NY`,`OH`,`WV` and encapsulate other
 
 ### Technologies
 
-Build this app as a web page front-end talking to a NodeJS server. 
+Build this app as a web page front-end talking to a NodeJS server.
 
 #### Web
 
@@ -37,9 +37,13 @@ The web page will be a single page, with two *centered* inputs:
 * A text box to input potential sequences
 * A button to submit the text to the server
 
-Responses from the server should be indicated to the user (i.e. icon for success or fail, a toast, message alert, whatever). Clear the text box after a successful response to enter another one. Other page flair is fine, but this is not a design assignment.
+Responses from the server should be indicated to the user (i.e. icon for success or fail, a toast, message alert, whatever). Clear the text box after a successful response to enter another one. **Do not validate Sequences on the Web page**
 
-**Choose a modern framework!** This single page must be in a modern framework. Examples of these would be ReactJS, AngularJS (1 or 2), VueJS, Ember, Polymer etc. *Do not use jQuery.*
+Other page flair is fine (CSS styles, etc), show your artistic skills if you want to, but this is not a design assignment.
+
+I would prefer a single index.html file for the Web portion, rather than a fully buildable/deployable boilerplate project.
+
+**Choose a modern framework!** This single page must be in a modern framework. Examples of these would be ReactJS, AngularJS, *VueJS*, Ember, Polymer etc. *Do not use jQuery.*
 
 #### Server
 
@@ -50,17 +54,26 @@ Build a web server in NodeJS that can respond to the request from the web client
 3. If valid, storing to DB
 4. Response to client
 
-Make sure `package.json` file is getting created by starting with `npm init`. You can use a server package (Express, Restify, actionhero, Sails, etc), and whatever other `npm` packages you'd like, or none at all. 
+Make sure `package.json` file is getting created by starting with `npm init`. You can use a server package (Express, Restify, actionhero, Sails, etc), and whatever other `npm` packages you'd like, or none at all.
 
 You do **not** need to use NodeJS templating engines (Jade, EJS, Handlebars, etc). Either statically serve the client web page files, or do not serve them at all and I will just open index.html from the file system while running the web server.
 
-Remember this is a *simple* web server. 
+Remember this is a *simple* web server.
 
 #### Included Files
 
-Along with this `readme.md`, use the included `db.js` as your data access layer. No need to connect to a real database, but do note a successful store will take 1000ms (time to upgrade the DB service!). Make sure your "success path" utilizes this file.
+* `readme.md` - This file
 
-Use this file un-edited. Something like `var dao = require('./db.js');` This will simulate calling into 3rd party library for a data storage function.
+* `db.js` - use this file as your data access in the server, as if it was a valid Node package that could send commands to a database. Example would be like:
+
+    ```
+    var db = require('./db.js')
+    // ... later ...
+        db.store(sequenceString, callbackFunction)
+    ```
+     No need to connect to a real database, but **do note** NodeJS is asynchronous, continuing only when that `callback` is called. A successful store will take 1000ms (time to upgrade the database!). Make sure your "success path" utilizes this file.
+
+    Use this file un-edited. This will simulate calling into 3rd party library for a data storage function.
 
 
 #### Use Case
@@ -72,11 +85,11 @@ A successful use case of this system will work like this:
 3. Response is sent to client after the DB stores the message, or defines it as invalid.
 4. Response is handled by the web page, indicating success or failure.
 
-Note that the user will not know if their string was a success or failure until the server responds. An invalid sequence will return quickly, but a valid sequence will only respond *after 1000ms* because of the `db.js` delay. 
+Note that the user will not know if their string was a success or failure until the server responds. An invalid sequence will return quickly, but a valid sequence will only respond *after 1000ms* because of the `db.js` delay.
 
 #### Unit Test
 
-Write a unit test. Either on the server side or the client side. 
+Write a unit test. Either on the server side or the client side.
 
 
 #### Documentation
@@ -86,13 +99,11 @@ Document in a file (markdown is cool) how to:
 1. Build your project
 2. Run your project
 3. Run your tests
-3. What technologies you used, and any other explainations or choices you feel were important. (No dissertations, but include the important stuff.)
+3. What technologies you used, and any other explanations or choices you feel were important. (No dissertations, but include the important stuff.)
 
 
 ## Submittal
 
-Zip up your project and email me. 
+Zip up your project and email me.
 
-Do **not** zip any library packges (node_modules, bower_components, etc). I would install those when I build your project, and will know how to do so from your documentation. With just source code and maybe some static scripts (like if you include your web framework's CDN file), this zip file should be pretty small. 
-
-
+Do **not** zip any library packages (node_modules, bower_components, etc). I would install those when I build your project, and will know how to do so from your documentation. With just source code and maybe some static scripts (like if you include your web framework's CDN file), this zip file should be pretty small.
