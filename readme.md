@@ -14,7 +14,7 @@ Researchers of a DNA-sequencing group need to store newly found sequences. Desig
 
 Your system will have two parts. A web page that loads at some path ("/" or "/home", for example) and an API server that accepts HTTP requests (at some path, like "/sequence" or "/processDNA"). The flow of the app will be:
 
-> Load web page -> Type in sequence in `<input>` text box -> click "Submit" button -> send http request to server -> server validates and, if good, stores into the db -> server sends response back -> web page displays the response.
+> Load web page -> Type in sequence in `<input>` text box -> click "Submit" button -> send http request to server -> server validates and, if good, "stores into the db" -> server sends response back -> web page displays all previous responses.
 
 The one trick with NodeJS is the callback style, so the ultimate goal is to respond to the request only once the db.js file has run its function (e.g. `.store(seq)`). I would expect a valid string to take **1 second** to respond if the message trail went through the db.js file and waited for the callback before calling the server response. It will be near instant if there is a validation error. That’s the key piece, that "storing in the database" needs to finish before sending the response. 
 
@@ -36,7 +36,7 @@ Valid pairs of DNA are represented by `PA`, `NY`,`OH`,`WV` and encapsulate other
 
 ### Technologies
 
-Build this app as a web page front-end talking to a NodeJS server.
+Build this app as a Vue3 web page front-end talking to a NodeJS server.
 
 #### Web
 
@@ -45,13 +45,14 @@ The web page will be a single page, with two *centered* inputs:
 * A text box to input potential sequences
 * A button to submit the text to the server
 
-Responses from the server should be indicated to the user (i.e. icon for success or fail, a toast, message alert, hidden/shown `<div>`, whatever). Clear the text box after a successful response to enter another one. **Do not validate Sequences on the Web page**
+Responses from the server should be indicated to the user (i.e. icon for success or fail, a toast, message alert, hidden/shown `<div>`, whatever). Clear the text box after a successful response to enter another one. **Do not validate Sequences on the Web page**. 
 
-Other page flair is fine (CSS styles, etc), show your artistic skills if you want to, but this is not a design assignment.
+Also display past requests and results from the server. This should dynamically update each time a request is made, no matter the result. Results do not need to persist between reloads.
+* centered table showing previously tried sequences and results
 
-Use whatever library and tools you prefer (the less complex the better). A common starting project will use WebPack, which is fine, but this assignment could be completed with a single `index.html` file.
+Other page flair is fine (CSS styles, labels, etc) though not necessary. Show your artistic skills if you want to, but this is not a design assignment.
 
-**Choose a modern framework!** This single page must be in a modern framework. Examples of these would be ReactJS, AngularJS, *VueJS*, Ember, Polymer etc. *Do not use jQuery.*
+Use whatever library and tools you prefer to scaffold the project (the less complex the better). A starting place would be the [VueJS Quick Start](https://vuejs.org/guide/quick-start.html).
 
 #### Server
 
@@ -64,7 +65,7 @@ Build a web server in NodeJS that can respond to the request from the web client
 
 Make sure `package.json` file is getting created by starting with `npm init`. You can use a server package (Express, Restify, actionhero, Sails, etc), and whatever other `npm` packages you'd like, or none at all.
 
- Either statically serve the client web page files, or do not serve them with this NodeJS server at all and I will just open index.html from the file system while running the web server. You do **not** need to use NodeJS templating engines (Jade, EJS, Handlebars, etc).
+Either statically serve the client web page files, or do not serve them with this NodeJS server at all and I will just open index.html from the file system while running the web server. You do **not** need to use NodeJS templating engines (Jade, EJS, Handlebars, etc).
 
 Remember this is a *simple* web server.
 
@@ -94,6 +95,7 @@ A successful use case of this system will work like this:
 2. Message is sent to server, which processes (and stores to database if valid sequence)
 3. Response is sent to client. Either indicating success after the DB stores the message, or explains what was wrong.
 4. Response is handled by the web page, indicating success or failure.
+5. The previous Sequence and Responses are shown on the web page in a simple table.
 
 Note that the user will not know if their string was a success or failure _until the server responds_. An invalid sequence will return quickly, but a valid sequence will only respond *after 1000ms* because of the `db.js` delay.
 
@@ -116,4 +118,4 @@ Document in a file (markdown is cool) how to:
 
 Zip up your project and email me.
 
-Do **not** zip any library packages (node_modules, bower_components, etc). I would install those when I build your project, and will know how to do so from your documentation. With just source code and maybe some static scripts (like if you include your web framework's CDN file), this zip file should be pretty small.
+Do **not** zip any library packages (node_modules, bower_components, etc). I would install those when I build your project, and will know how to do so from your documentation. With just source code and maybe a static script (like if you include your web framework's CDN file), this zip file should be extremely small.
