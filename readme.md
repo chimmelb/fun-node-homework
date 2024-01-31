@@ -1,10 +1,10 @@
 # Fun Node Homework
 
-The purpose of this homework assignment is to evaluate the approach, code, communication, _following requirements_ and ability of candidates for the Developer position. This is far from anything useful, though hopefully is fun!
+The purpose of this homework assignment is to evaluate the approach, code, communication, _following requirements_ and ability of candidates for the Developer position. This is far from anything useful, though hopefully is fun! 
 
 > Read this entire doc before starting.
 
-Depending on previous knowledge, this assignment should take around 2-6 hours. Email me with any questions you have. This is meant to be a small project to guage your aptitude a full-stack JavaScript environment. 
+Depending on previous knowledge, this assignment should take around 2-6 hours. Think *simple* - no need to make it complicated. Email me with any questions you have.  
 
 
 ## Assignment
@@ -29,19 +29,17 @@ Valid pairs of DNA are represented by `PA`, `NY`,`OH`,`WV` and encapsulate other
 
 ### Technologies
 
-Build this app as a Vue3 web page front-end talking to a NodeJS server.
-
-This project will have a few parts:
-1. A Vue3 web page that makes calls to...
+This project will have a few parts
+1. A Vue3 web page
 1. A NodeJS API server
 3. Unit test
 4. Documentation
 
-The one trick with NodeJS is the non-blocking I/O, so the ultimate goal is to respond to the request only once the db.js file has run its function (e.g. `.storePromise(seq)`). I would expect a valid string to take **1.5 seconds** to respond. This will look slow to the user. The response will be instant if there is a validation error, but will "stall" from the client perspective as the database call is running. That’s the key piece, that "storing in the database" needs to finish before sending the response. 
-
-**TL;DR If the server responds to the client before the DB is finished, that is incorrect.**
+It is OK if there is a "web project" and a "server project". So long as the documentation indicates how to run everything, we're good.
 
 #### Web
+
+Build a VueJS (version 3) web page. Include at least one [component](https://vuejs.org/guide/essentials/component-basics.html), or one [composable](https://vuejs.org/guide/reusability/composables.html) - these are common VueJS building blocks.
 
 1. The initial web page will be a single page, with two *centered* inputs:
 
@@ -64,6 +62,10 @@ Build an (HTTP) API server in NodeJS that can respond to the request from the we
 1. Validity of sequence string (see rules above)
 1. **Only if valid**, store to DB 
 1. Response to client
+
+The one trick with NodeJS is the non-blocking I/O, so the ultimate goal is to respond to the request only once the db.js file has run its function (e.g. `.storePromise(seq)`). I would expect a valid string to take **1.5 seconds** to respond. This will look slow to the user. The response will be instant if there is a validation error, but will "stall" from the client perspective as the database call is running. That’s the key piece, that "storing in the database" needs to finish before sending the response. 
+
+**TL;DR If the server responds to the client before the DB is finished, that is incorrect.**
 
 Make sure `package.json` file is getting created by starting with `npm init`. You can use a server package (Express, Restify, actionhero, Sails, etc), and whatever other `npm` packages you'd like, or none at all.
 
