@@ -16,19 +16,21 @@ Your system will have two parts. A web page that loads at some path ("/" or "/ho
 
 > Load web page -> Type in sequence in `<input>` text box -> click "Submit" button -> send http request to server -> server validates and, if good, "stores into the db" -> server sends response back -> web page displays all previous responses.
 
-The one trick with NodeJS is the callback style, so the ultimate goal is to respond to the request only once the db.js file has run its function (e.g. `.store(seq)`). I would expect a valid string to take **1 second** to respond if the message trail went through the db.js file and waited for the callback before calling the server response. It will be near instant if there is a validation error. That’s the key piece, that "storing in the database" needs to finish before sending the response. 
+The one trick with NodeJS is the non-blocking I/O, so the ultimate goal is to respond to the request only once the db.js file has run its function (e.g. `.storePromise(seq)`). I would expect a valid string to take **1.5 seconds** to respond. This will look slow to the user. The response will be instant if there is a validation error, but will "stall" from the client perspective as the database call is running. That’s the key piece, that "storing in the database" needs to finish before sending the response. 
+
+**TL;DR If the server responds to the client before the DB is finished, that is incorrect.**
 
 ### Sequences
 Valid pairs of DNA are represented by `PA`, `NY`,`OH`,`WV` and encapsulate other valid pairs. A sequence can be any number of pairs.
 
-**Example valid pairs:**
+**Example of valid pairs:**
 
 * `PNOWVHYA`
 * `NY`
 * `WOHV`
 * `PPAA`
 
-**Exmaple invalid pairs: **
+**Example of invalid pairs:**
 
 * `PAPA` - not encapsulating
 * `NOH` - no matching pair on `N`
@@ -40,19 +42,19 @@ Build this app as a Vue3 web page front-end talking to a NodeJS server.
 
 #### Web
 
-The web page will be a single page, with two *centered* inputs:
+1. The initial web page will be a single page, with two *centered* inputs:
 
 * A text box to input potential sequences
 * A button to submit the text to the server
 
-Responses from the server should be indicated to the user (i.e. icon for success or fail, a toast, message alert, hidden/shown `<div>`, whatever). Clear the text box after a successful response to enter another one. **Do not validate Sequences on the Web page**. 
+2. Responses from the server should be indicated to the user (i.e. icon for success or fail, a toast, message alert, hidden/shown `<div>`, whatever). Clear the text box after a successful response to enter another one. **Do not validate Sequences on the Web page**. 
 
-Also display past requests and results from the server. This should dynamically update each time a request is made, no matter the result. Results do not need to persist between reloads.
-* centered table showing previously tried sequences and results
+3. Display past requests and results from the server. This should dynamically update each time a request is made, no matter the result. Results do not need to persist between reloads.
+* centered table showing previously tried sequences and each result results
 
 Other page flair is fine (CSS styles, labels, etc) though not necessary. Show your artistic skills if you want to, but this is not a design assignment.
 
-Use whatever library and tools you prefer to scaffold the project (the less complex the better). A starting place would be the [VueJS Quick Start](https://vuejs.org/guide/quick-start.html).
+Use whatever library and tools you prefer to scaffold the project (the less complex the better). A starting place would be the [VueJS Quick Start](https://vuejs.org/guide/quick-start.html) but you could do this as a single .html file as well.
 
 #### Server
 
@@ -80,9 +82,9 @@ If you are already familiar with NodeJS and wish to use Promises or `async/await
     ```
     var db = require('./db.js')
     // ... later ...
-        db.store(sequenceString, callbackFunction)
+        db.storePromise(sequenceString) // await or .then()
     ```
-     No need to connect to a real database, but **do note** NodeJS is asynchronous, continuing only when that `callback` is called. _A successful store will take 1000ms_ (time to upgrade the database!). Make sure your "success path" utilizes this file.
+     No need to connect to a real database, but **do note** NodeJS is asynchronous. _A successful store will take 1500ms_ (time to upgrade the database!). Make sure your "success path" utilizes this file and waits on the database. 
 
     Use this file un-edited. This will simulate calling into 3rd party library for a data storage function.
 
@@ -97,7 +99,7 @@ A successful use case of this system will work like this:
 4. Response is handled by the web page, indicating success or failure.
 5. The previous Sequence and Responses are shown on the web page in a simple table.
 
-Note that the user will not know if their string was a success or failure _until the server responds_. An invalid sequence will return quickly, but a valid sequence will only respond *after 1000ms* because of the `db.js` delay.
+Note that the user will not know if their string was a success or failure _until the server responds_. An invalid sequence will return quickly, but a valid sequence will only respond *after 1500ms* because of the `db.js` delay.
 
 #### Unit Test
 
@@ -119,3 +121,5 @@ Document in a file (markdown is cool) how to:
 Zip up your project and email me.
 
 Do **not** zip any library packages (node_modules, bower_components, etc). I would install those when I build your project, and will know how to do so from your documentation. With just source code and maybe a static script (like if you include your web framework's CDN file), this zip file should be extremely small.
+
+It is my intention to unzip your file, read the documentation, and then build and run your project. I will then load the web page and enter a few sequences, looking for correct behavior (results are stored on the page, user notified of success/failure, 1.5s delay on successful entires). 
