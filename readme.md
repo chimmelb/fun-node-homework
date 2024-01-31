@@ -4,21 +4,12 @@ The purpose of this homework assignment is to evaluate the approach, code, commu
 
 > Read this entire doc before starting.
 
-Depending on previous knowledge, this assignment should take around 2-6 hours. Email me with any questions you have.
+Depending on previous knowledge, this assignment should take around 2-6 hours. Email me with any questions you have. This is meant to be a small project to guage your aptitude a full-stack JavaScript environment. 
 
 
 ## Assignment
 Researchers of a DNA-sequencing group need to store newly found sequences. Design a system that will display a web page and make a call to the server to evaluate a sequence's validity and store valid results using the requirements detailed below.
 
-### Summary
-
-Your system will have two parts. A web page that loads at some path ("/" or "/home", for example) and an API server that accepts HTTP requests (at some path, like "/sequence" or "/processDNA"). The flow of the app will be:
-
-> Load web page -> Type in sequence in `<input>` text box -> click "Submit" button -> send http request to server -> server validates and, if good, "stores into the db" -> server sends response back -> web page displays all previous responses.
-
-The one trick with NodeJS is the non-blocking I/O, so the ultimate goal is to respond to the request only once the db.js file has run its function (e.g. `.storePromise(seq)`). I would expect a valid string to take **1.5 seconds** to respond. This will look slow to the user. The response will be instant if there is a validation error, but will "stall" from the client perspective as the database call is running. That’s the key piece, that "storing in the database" needs to finish before sending the response. 
-
-**TL;DR If the server responds to the client before the DB is finished, that is incorrect.**
 
 ### Sequences
 Valid pairs of DNA are represented by `PA`, `NY`,`OH`,`WV` and encapsulate other valid pairs. A sequence can be any number of pairs.
@@ -40,6 +31,16 @@ Valid pairs of DNA are represented by `PA`, `NY`,`OH`,`WV` and encapsulate other
 
 Build this app as a Vue3 web page front-end talking to a NodeJS server.
 
+This project will have a few parts:
+1. A Vue3 web page that makes calls to...
+1. A NodeJS API server
+3. Unit test
+4. Documentation
+
+The one trick with NodeJS is the non-blocking I/O, so the ultimate goal is to respond to the request only once the db.js file has run its function (e.g. `.storePromise(seq)`). I would expect a valid string to take **1.5 seconds** to respond. This will look slow to the user. The response will be instant if there is a validation error, but will "stall" from the client perspective as the database call is running. That’s the key piece, that "storing in the database" needs to finish before sending the response. 
+
+**TL;DR If the server responds to the client before the DB is finished, that is incorrect.**
+
 #### Web
 
 1. The initial web page will be a single page, with two *centered* inputs:
@@ -58,20 +59,15 @@ Use whatever library and tools you prefer to scaffold the project (the less comp
 
 #### Server
 
-Build a web server in NodeJS that can respond to the request from the web client. *Define whatever interface you want, including payload.* This processing will include:
+Build an (HTTP) API server in NodeJS that can respond to the request from the web client. *Define whatever interface you want, including payload.* This processing will include:
 
-1. Validity of request (were the correct parameters provided?)
-2. Validity of sequence string (is the sequence valid? see rules above)
-3. If valid, storing to DB (call and wait for the storage in the "database")
-4. Response to client
+1. Validity of sequence string (see rules above)
+1. **Only if valid**, store to DB 
+1. Response to client
 
 Make sure `package.json` file is getting created by starting with `npm init`. You can use a server package (Express, Restify, actionhero, Sails, etc), and whatever other `npm` packages you'd like, or none at all.
 
-Either statically serve the client web page files, or do not serve them with this NodeJS server at all and I will just open index.html from the file system while running the web server. You do **not** need to use NodeJS templating engines (Jade, EJS, Handlebars, etc).
-
-Remember this is a *simple* web server.
-
-If you are already familiar with NodeJS and wish to use Promises or `async/await`, go for it.
+Either statically serve the client web page files, or do not serve them with this NodeJS server at all and I will just open index.html from the file system while running the web server. You do **not** need to use server-side-rendering (SSR). Remember this is a *simple* server.
 
 #### Included Files
 
@@ -82,7 +78,7 @@ If you are already familiar with NodeJS and wish to use Promises or `async/await
     ```
     var db = require('./db.js')
     // ... later ...
-        db.storePromise(sequenceString) // await or .then()
+        db.storePromise(sequenceString) // use await or .then() appropiately
     ```
      No need to connect to a real database, but **do note** NodeJS is asynchronous. _A successful store will take 1500ms_ (time to upgrade the database!). Make sure your "success path" utilizes this file and waits on the database. 
 
@@ -122,4 +118,4 @@ Zip up your project and email me.
 
 Do **not** zip any library packages (node_modules, bower_components, etc). I would install those when I build your project, and will know how to do so from your documentation. With just source code and maybe a static script (like if you include your web framework's CDN file), this zip file should be extremely small.
 
-It is my intention to unzip your file, read the documentation, and then build and run your project. I will then load the web page and enter a few sequences, looking for correct behavior (results are stored on the page, user notified of success/failure, 1.5s delay on successful entires). 
+It is my intention to unzip your file, read the documentation, and then build and run your project. I will follow the use case above.
