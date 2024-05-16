@@ -31,7 +31,7 @@ Valid pairs of DNA are represented by `PA`, `NY`,`OH`,`WV` and encapsulate other
 
 This project will have a few parts
 1. A Vue3 web page
-1. A NodeJS API server
+1. A NodeJS API server written in actionhero
 3. Unit test
 4. Documentation
 
@@ -39,7 +39,7 @@ It is OK if there is a "web project" and a "server project". So long as the docu
 
 #### Web
 
-Build a VueJS (version 3) web page. Include at least one [component](https://vuejs.org/guide/essentials/component-basics.html), or one [composable](https://vuejs.org/guide/reusability/composables.html) - these are common VueJS building blocks.
+Build a VueJS (version 3) web page. Include at least one inner [component](https://vuejs.org/guide/essentials/component-basics.html), or one [composable](https://vuejs.org/guide/reusability/composables.html) - these are common VueJS building blocks. e.g. Your <App> component will import another file for a <CustomTable> component.
 
 1. The initial web page will be a single page, with two *centered* inputs:
 
@@ -57,7 +57,7 @@ Use whatever library and tools you prefer to scaffold the project (the less comp
 
 #### Server
 
-Build an (HTTP) API server in NodeJS that can respond to the request from the web client. *Define whatever interface you want, including payload.* This processing will include:
+Build an (HTTP) API server in NodeJS that can respond to the request from the web client. Please use [actionhero](https://github.com/Actionhero/Actionhero) so you can get a feel for our projects.  *Define whatever interface you want, including payload.* This processing will include:
 
 1. Validity of sequence string (see rules above)
 1. **Only if valid**, store to DB 
@@ -67,7 +67,7 @@ The one trick with NodeJS is the non-blocking I/O, so the ultimate goal is to re
 
 **TL;DR If the server responds to the client before the DB is finished, that is incorrect.**
 
-Make sure `package.json` file is getting created by starting with `npm init`. You can use a server package (Express, Restify, actionhero, Sails, etc), and whatever other `npm` packages you'd like, or none at all.
+Make sure `package.json` file is getting created by starting with `npm init`. You can use whatever other `npm` packages you'd like, or none at all.
 
 Either statically serve the client web page files, or do not serve them with this NodeJS server at all and I will just open index.html from the file system while running the web server. You do **not** need to use server-side-rendering (SSR). Remember this is a *simple* server.
 
