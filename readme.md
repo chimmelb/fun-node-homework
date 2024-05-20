@@ -67,9 +67,9 @@ The one trick with NodeJS is the non-blocking I/O, so the ultimate goal is to re
 
 **TL;DR If the server responds to the client before the DB is finished, that is incorrect.**
 
-Make sure `package.json` file is getting created by starting with `npm init`. You can use whatever other `npm` packages you'd like, or none at all.
+Follow the [actionhero guide, Quick Start section](https://www.npmjs.com/package/actionhero) to generate your server project. (Do not run `npm init` first.) You can use whatever other `npm` packages you'd like after that, or none at all.
 
-Either statically serve the client web page files, or do not serve them with this NodeJS server at all and I will just open index.html from the file system while running the web server. You do **not** need to use server-side-rendering (SSR). Remember this is a *simple* server.
+You can serve the web page files from within this server, or their own project, or do not serve them with NodeJS server and I will just open index.html from the file system while running the web server. You do **not** need to use server-side-rendering (SSR) for the web - actionhero is built as an API server anyway. Remember this is a *simple* server.
 
 #### Included Files
 
